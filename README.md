@@ -75,7 +75,7 @@ Home-Credit-Default-Risk/
 │
 ├── notebooks/
 │   ├── archive/
-│   │   ├── home_credit_default_risk_v1.ipynb
+│   │   └── home_credit_default_risk_v1.ipynb
 │   └── home_credit_default_risk.ipynb
 │
 ├── src/
