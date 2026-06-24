@@ -1,6 +1,0 @@
-Metric,Value
-ROC-AUC Best Validation,0.7898
-ROC-AUC 5-Fold CV,0.7863
-Average Precision,0.3846
-Best F1 Score,0.4232
-Best Threshold,0.68
