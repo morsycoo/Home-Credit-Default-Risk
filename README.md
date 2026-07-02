@@ -673,6 +673,378 @@ Then display them:
 
 ![Docker](assets/docker_running.png)
 
+---
+
+# 🧠 Machine Learning Pipeline
+
+The project follows a complete end-to-end machine learning workflow inspired by production ML systems.
+
+```text
+Business Understanding
+        │
+        ▼
+Data Collection
+        │
+        ▼
+Data Cleaning
+        │
+        ▼
+Exploratory Data Analysis (EDA)
+        │
+        ▼
+Feature Engineering
+        │
+        ▼
+Feature Selection
+        │
+        ▼
+Baseline Model
+        │
+        ▼
+Model Comparison
+        │
+        ▼
+Hyperparameter Optimization
+        │
+        ▼
+Threshold Optimization
+        │
+        ▼
+Model Explainability
+        │
+        ▼
+Model Serialization
+        │
+        ▼
+Inference Pipeline
+        │
+        ▼
+FastAPI Deployment
+        │
+        ▼
+Docker Container
+```
+
+---
+
+# 🧹 Data Preprocessing
+
+Several preprocessing techniques were applied before training the models.
+
+### Missing Values
+
+- Median Imputation
+- Zero Filling
+- Domain-Specific Imputation
+
+---
+
+### Data Cleaning
+
+- Duplicate removal
+- Invalid value handling
+- Infinite value replacement
+- Data consistency checks
+
+---
+
+### Feature Encoding
+
+Categorical variables were encoded using:
+
+- Label Encoding
+- Frequency Encoding (where applicable)
+
+---
+
+### Feature Scaling
+
+Tree-based algorithms (LightGBM, XGBoost, CatBoost) do not require feature scaling, therefore no standardization was applied during training.
+
+---
+
+# ⚙ Feature Engineering
+
+A large number of predictive features were engineered from multiple auxiliary datasets.
+
+The goal was to transform raw financial records into meaningful customer-level statistics.
+
+---
+
+## Bureau Features
+
+Historical credit information was aggregated into customer-level metrics.
+
+Examples include:
+
+- Number of previous loans
+- Average credit duration
+- Maximum overdue days
+- Credit debt ratios
+- Credit end dates
+
+---
+
+## Previous Applications
+
+Features extracted include:
+
+- Approval rate
+- Refusal rate
+- Previous loan amount
+- Previous credit amount
+- Previous annuity
+- Previous application timing
+
+---
+
+## Installment Payments
+
+Payment behavior features such as:
+
+- Payment delays
+- Maximum delay
+- Average delay
+- Number of installments
+- Late payment ratio
+
+---
+
+## POS Cash Balance
+
+Generated features include:
+
+- Remaining installments
+- Future installments
+- Average delinquency
+- Contract status statistics
+
+---
+
+## Credit Card Balance
+
+Extracted statistics include:
+
+- Credit utilization
+- Balance ratios
+- Payment ratios
+- Cash withdrawal ratios
+
+---
+
+## Application Features
+
+Derived financial indicators including:
+
+- Credit to Income Ratio
+- Credit to Annuity Ratio
+- Annuity to Income Ratio
+- Employment Length
+- Age
+- Income per Family Member
+
+---
+
+# 📉 Feature Selection
+
+Feature importance obtained from LightGBM was used to remove less informative variables.
+
+Benefits:
+
+- Reduced overfitting
+- Faster inference
+- Lower memory usage
+- Better generalization
+
+The final production model uses only the selected features stored in:
+
+```text
+models/selected_features.pkl
+```
+
+---
+
+# 🤖 Models Evaluated
+
+Several gradient boosting algorithms were evaluated.
+
+| Model | Purpose |
+|--------|---------|
+| LightGBM | Baseline |
+| Feature Selection LightGBM | Reduced feature space |
+| Optuna Tuned LightGBM | Hyperparameter optimization |
+| XGBoost | Benchmark |
+| CatBoost | Benchmark |
+| Voting Ensemble | Final comparison |
+
+---
+
+# 📊 Model Performance
+
+| Model | ROC-AUC |
+|--------|--------:|
+| Baseline LightGBM | 0.775580 |
+| Feature Selection LightGBM | 0.775606 |
+| Optuna LightGBM | 0.777266 |
+| XGBoost | 0.777300 |
+| CatBoost | 0.776691 |
+| Voting Ensemble | **0.779883** |
+
+---
+
+## Best Individual Model
+
+The production API uses the **Optuna-tuned LightGBM** model because it provides an excellent balance between:
+
+- Accuracy
+- Inference Speed
+- Memory Usage
+- Deployment Simplicity
+
+The serialized model is stored as:
+
+```text
+models/home_credit_optuna_lgbm.pkl
+```
+
+---
+
+# ⚡ Hyperparameter Optimization
+
+Hyperparameter tuning was performed using **Optuna**.
+
+Optimized parameters included:
+
+- Number of Trees
+- Learning Rate
+- Maximum Depth
+- Feature Fraction
+- Bagging Fraction
+- Minimum Child Samples
+- Regularization Parameters
+
+This significantly improved model performance compared to the baseline model.
+
+---
+
+# 🎯 Threshold Optimization
+
+Instead of using the default threshold (0.50), the optimal classification threshold was determined using validation data.
+
+Default Threshold
+
+```text
+0.50
+```
+
+Optimized Threshold
+
+```text
+0.65
+```
+
+Benefits:
+
+- Higher Precision
+- Better Recall Balance
+- Improved F1 Score
+- Lower False Positives
+
+The threshold is saved inside:
+
+```text
+models/best_threshold.pkl
+```
+
+---
+
+# 📈 Cross Validation
+
+A **5-Fold Stratified Cross Validation** strategy was used.
+
+Results:
+
+```text
+Mean ROC-AUC : 0.772707
+
+Standard Deviation : 0.002695
+```
+
+The low variance demonstrates that the model generalizes consistently across different validation folds.
+
+---
+
+# 🔍 Model Explainability
+
+Model interpretability was performed using **SHAP (SHapley Additive Explanations)**.
+
+SHAP was used to:
+
+- Rank feature importance
+- Explain individual predictions
+- Interpret model behavior
+- Increase model transparency
+
+Top Important Features
+
+- EXT_SOURCE_1
+- EXT_SOURCE_2
+- EXT_SOURCE_3
+- PAYMENT_RATE
+- CREDIT_TO_ANNUITY_RATIO
+- INST_DELAY_MAX
+- POS_FUTURE_INSTALLMENTS_MEAN
+- AMT_CREDIT
+- DAYS_BIRTH
+
+These variables have the strongest influence on the predicted probability of default.
+
+---
+
+# 💾 Model Persistence
+
+Production artifacts are serialized using **Joblib**.
+
+Stored artifacts include:
+
+```text
+models/
+
+├── home_credit_optuna_lgbm.pkl
+├── selected_features.pkl
+├── best_threshold.pkl
+└── final_model_results.csv
+```
+
+During inference, these artifacts are loaded automatically by the prediction pipeline.
+
+---
+
+# 🔄 Inference Pipeline
+
+```text
+Incoming JSON
+        │
+        ▼
+Pydantic Validation
+        │
+        ▼
+Preprocessing
+        │
+        ▼
+Feature Alignment
+        │
+        ▼
+Selected Features
+        │
+        ▼
+LightGBM Prediction
+        │
+        ▼
+Threshold Optimization
+        │
+        ▼
+JSON Response
 ```
 
 <div align="center">
