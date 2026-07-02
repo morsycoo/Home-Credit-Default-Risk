@@ -647,23 +647,6 @@ ReDoc
 http://127.0.0.1:8000/redoc
 ```
 
----
-
-# 📷 API Preview
-
-> Add screenshots inside an `assets/` directory.
-
-Example:
-
-```text
-assets/
-│
-├── swagger_home.png
-├── swagger_predict.png
-├── prediction_response.png
-└── docker_running.png
-```
-
 # 🧠 Machine Learning Pipeline
 
 The project follows a complete end-to-end machine learning workflow inspired by production ML systems.
