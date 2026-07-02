@@ -1,89 +1,209 @@
 # 🏠 Home Credit Default Risk Prediction
 
-## 📌 Project Overview
+<div align="center">
 
-This project was developed as a complete end-to-end Machine Learning pipeline for the Home Credit Default Risk competition.
+# Credit Risk Intelligence System
 
-The objective is to predict whether a loan applicant will experience payment difficulties based on application information, credit history, previous loans, installment payments, POS cash behavior, and credit card activity.
+**An End-to-End Machine Learning & MLOps-ready Credit Risk Prediction System built with LightGBM, FastAPI, Docker, and Pytest.**
 
-The project covers the entire machine learning workflow, including:
+![Python](https://img.shields.io/badge/Python-3.13-blue?logo=python)
+![FastAPI](https://img.shields.io/badge/FastAPI-Production-green?logo=fastapi)
+![LightGBM](https://img.shields.io/badge/LightGBM-ML-success)
+![Docker](https://img.shields.io/badge/Docker-Containerized-blue?logo=docker)
+![Pytest](https://img.shields.io/badge/Pytest-Tested-success?logo=pytest)
+![License](https://img.shields.io/badge/License-MIT-orange)
+![Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen)
 
-* Business Understanding
-* Data Cleaning & Preprocessing
-* Exploratory Data Analysis (EDA)
-* Feature Engineering
-* Baseline Modeling
-* Feature Selection
-* Hyperparameter Optimization (Optuna)
-* Cross Validation
-* Model Explainability (SHAP)
-* Threshold Optimization
-* Ensemble Learning
-* Model Persistence
+</div>
 
 ---
 
-## 🎯 Business Problem
+# 📖 Table of Contents
 
-Home Credit aims to expand financial inclusion by providing loans to individuals with limited or non-traditional credit histories.
-
-The challenge is to accurately predict the probability of loan default while minimizing risk and maintaining access to credit.
-
-This project builds a predictive model that estimates customer default risk using historical financial behavior.
+- Project Overview
+- Business Problem
+- Project Highlights
+- System Architecture
+- Project Structure
+- Dataset
+- Machine Learning Pipeline
+- Feature Engineering
+- Models
+- Model Performance
+- Threshold Optimization
+- Explainability (SHAP)
+- REST API
+- Docker
+- Installation
+- Running the Project
+- API Examples
+- Testing
+- Logging
+- Technologies Used
+- Future Improvements
+- License
+- Author
 
 ---
 
-## 📂 Dataset
+# 📌 Project Overview
 
-This project uses the Home Credit Default Risk dataset from Kaggle.
+Home Credit provides loans to customers who often have little or no traditional credit history.
 
-Dataset Link:
+The goal of this project is to predict whether a customer will experience payment difficulties using historical financial information, previous loans, bureau reports, installment behavior, POS cash balances, and credit card activity.
 
-https://www.kaggle.com/competitions/home-credit-default-risk
+Instead of building only a machine learning notebook, this repository contains a complete production-style machine learning application.
 
-### Main Files
+The project includes:
 
-* application_train.csv
-* application_test.csv
-* bureau.csv
-* bureau_balance.csv
-* previous_application.csv
-* POS_CASH_balance.csv
-* installments_payments.csv
-* credit_card_balance.csv
+- Complete data preprocessing pipeline
+- Feature engineering
+- Feature selection
+- Hyperparameter optimization
+- Threshold optimization
+- Model persistence
+- Production inference pipeline
+- FastAPI REST API
+- Docker containerization
+- Logging system
+- Automated API tests
+- Modular project architecture
 
-### Note
+This repository is designed to resemble the workflow used in real-world machine learning projects.
 
-The dataset is not included in this repository because of its large size and Kaggle licensing restrictions.
+---
 
-Please download the dataset directly from Kaggle and place the files inside:
+# 🎯 Business Problem
+
+Financial institutions lose millions of dollars every year because of loan defaults.
+
+Rejecting every risky applicant reduces profit, while approving everyone increases financial losses.
+
+The objective is therefore to estimate the probability that a customer will default on a loan.
+
+The model allows lenders to:
+
+- Reduce financial risk
+- Improve approval decisions
+- Increase profitability
+- Expand financial inclusion
+- Support automated decision making
+
+---
+
+# ⭐ Project Highlights
+
+✔ End-to-End Machine Learning Pipeline
+
+✔ Production-ready FastAPI Application
+
+✔ Docker Container
+
+✔ Modular Python Codebase
+
+✔ Feature Engineering Pipeline
+
+✔ Feature Selection
+
+✔ Optuna Hyperparameter Optimization
+
+✔ Threshold Optimization
+
+✔ SHAP Explainability
+
+✔ Logging System
+
+✔ REST API
+
+✔ Swagger Documentation
+
+✔ Automated Testing with Pytest
+
+✔ Production Model Loading
+
+✔ Ready for Cloud Deployment
+
+---
+
+# 🏗 System Architecture
 
 ```text
-data/
+                     Client
+                        │
+                        ▼
+                 FastAPI REST API
+                        │
+                        ▼
+              Request Validation
+                 (Pydantic Models)
+                        │
+                        ▼
+              Data Preprocessing
+                        │
+                        ▼
+             Feature Engineering
+                        │
+                        ▼
+          Selected Features Loader
+                        │
+                        ▼
+            Trained LightGBM Model
+                        │
+                        ▼
+          Probability Prediction
+                        │
+                        ▼
+        Threshold Optimization
+                        │
+                        ▼
+               JSON Response
 ```
-
-before running the notebook.
 
 ---
 
-## 🏗 Project Structure
+# 📂 Project Structure
 
 ```text
 Home-Credit-Default-Risk/
 
+│
+├── api/
+│   └── app.py
+│
+├── artifacts/
+│
+├── data/
+│   ├── raw/
+│   └── processed/
+│
+├── logs/
+│   └── app.log
+│
 ├── models/
+│   ├── home_credit_optuna_lgbm.pkl
+│   ├── selected_features.pkl
+│   ├── best_threshold.pkl
+│   └── final_model_results.csv
 │
 ├── notebooks/
-│   ├── archive/
-│   │   └── home_credit_default_risk_v1.ipynb
 │   └── home_credit_default_risk.ipynb
 │
 ├── src/
 │   ├── preprocessing.py
 │   ├── feature_engineering.py
+│   ├── artifacts.py
+│   ├── inference.py
 │   ├── model.py
+│   ├── logger.py
+│   ├── schema.py
+│   ├── config.py
 │   └── utils.py
 │
+├── tests/
+│   ├── conftest.py
+│   └── test_api.py
+│
+├── Dockerfile
 ├── requirements.txt
 ├── README.md
 └── .gitignore
@@ -91,194 +211,123 @@ Home-Credit-Default-Risk/
 
 ---
 
-## ⚙️ Feature Engineering
+# 🚀 Why This Project?
 
-Features were engineered from multiple auxiliary datasets:
+Most machine learning repositories stop after training a model inside a notebook.
 
-### Bureau Features
+This project goes much further by transforming the trained model into a production-ready application.
 
-Customer historical credit behavior.
+It demonstrates practical machine learning engineering skills including:
 
-### Previous Application Features
+- Software engineering
+- API development
+- Docker
+- Model deployment
+- Testing
+- Logging
+- Modular architecture
+- Production inference
 
-Information about previously submitted loan applications.
-
-### Installments Payments Features
-
-Repayment patterns and installment delays.
-
-### POS Cash Features
-
-Point-of-sale loan activity and delinquency behavior.
-
-### Credit Card Features
-
-Credit utilization, payment ratios, and delinquency indicators.
+This makes the project suitable for showcasing Machine Learning Engineering skills rather than only Data Science experimentation.
 
 ---
 
-## 🤖 Models Evaluated
+# 🎯 Main Features
 
-### LightGBM Baseline
+### Machine Learning
 
-Initial benchmark model.
-
-### Feature Selection LightGBM
-
-Reduced feature space using feature importance.
-
-### Optuna Tuned LightGBM
-
-Automated hyperparameter optimization.
-
-### XGBoost
-
-Gradient boosting benchmark.
-
-### CatBoost
-
-Categorical boosting benchmark.
-
-### Voting Ensemble
-
-Combination of multiple models for improved performance.
+- Data Cleaning
+- Missing Value Handling
+- Feature Engineering
+- Feature Selection
+- LightGBM
+- XGBoost
+- CatBoost
+- Optuna
+- SHAP
+- Cross Validation
+- Threshold Optimization
 
 ---
 
-## 📊 Model Performance
+### Backend
 
-| Model                      | ROC-AUC  |
-| -------------------------- | -------- |
-| Baseline LightGBM          | 0.775580 |
-| Feature Selection LightGBM | 0.775606 |
-| Optuna Tuned LightGBM      | 0.777266 |
-| XGBoost                    | 0.777300 |
-| CatBoost                   | 0.776691 |
-| Voting Ensemble            | 0.779883 |
+- FastAPI
+- Pydantic Validation
+- Swagger UI
+- REST API
+- JSON Responses
 
-### Best Model
+---
 
-Voting Ensemble achieved the highest ROC-AUC score:
+### Production
+
+- Docker
+- Logging
+- Joblib Model Loading
+- Automated Testing
+- Modular Source Code
+
+---
+
+# 📈 Project Workflow
 
 ```text
-ROC-AUC = 0.779883
+Raw CSV Files
+        │
+        ▼
+Data Cleaning
+        │
+        ▼
+Feature Engineering
+        │
+        ▼
+Feature Selection
+        │
+        ▼
+Model Training
+        │
+        ▼
+Hyperparameter Optimization
+        │
+        ▼
+Threshold Optimization
+        │
+        ▼
+Model Saving
+        │
+        ▼
+Inference Pipeline
+        │
+        ▼
+FastAPI
+        │
+        ▼
+Docker
+        │
+        ▼
+REST API
 ```
 
 ---
 
-## 🔍 Model Explainability
+# 🎯 Repository Goals
 
-SHAP (SHapley Additive Explanations) was used to interpret model predictions.
+This project aims to demonstrate practical knowledge of:
 
-Top influential features included:
+- Machine Learning
+- Model Deployment
+- API Development
+- Software Engineering
+- MLOps Foundations
+- Production Machine Learning
 
-* EXT_SOURCE_1
-* EXT_SOURCE_2
-* EXT_SOURCE_3
-* POS_FUTURE_INSTALLMENTS_MEAN
-* INST_DELAY_MAX
-* INST_COUNT
-* AMT_CREDIT
-* DAYS_BIRTH
-
-This helped explain how customer characteristics influenced default risk.
+rather than only model training.
 
 ---
 
-## 🎯 Threshold Optimization
+<div align="center">
 
-The default classification threshold was optimized using validation data.
+⭐ **If you found this repository useful, consider giving it a star!**
 
-Best Threshold:
-
-```text
-0.65
-```
-
-Optimized Metrics:
-
-```text
-Precision : 0.2634
-Recall    : 0.4302
-F1 Score  : 0.3267
-```
-
----
-
-## 🔄 Cross Validation
-
-5-Fold Stratified Cross Validation was performed.
-
-Results:
-
-```text
-Mean ROC-AUC : 0.772707
-Std ROC-AUC  : 0.002695
-```
-
-The low standard deviation indicates stable model performance across folds.
-
----
-
-## 💾 Model Saving
-
-The final model can be saved using:
-
-```python
-import joblib
-
-joblib.dump(model, "models/model.pkl")
-```
-
----
-
-## 🚀 Installation
-
-Clone the repository:
-
-```bash
-git clone https://github.com/morsycoo/Home-Credit-Default-Risk
-cd Home-Credit-Default-Risk
-```
-
-Install dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
----
-
-## ▶️ Run
-
-Open:
-
-```text
-notebooks/home_credit_default_risk.ipynb
-```
-
-and execute the notebook sequentially.
-
----
-
-## 🛠 Technologies Used
-
-* Python
-* Pandas
-* NumPy
-* Scikit-Learn
-* LightGBM
-* XGBoost
-* CatBoost
-* Optuna
-* SHAP
-* Matplotlib
-* Seaborn
-
----
-
-## 👨‍💻 Author
-
-Mahmoud Morsy
-
-AI Engineer | Machine Learning | Deep Learning | Data Science
+</div>
