@@ -1034,8 +1034,7 @@ Threshold Optimization
         │
         ▼
   JSON Response
-
----
+```
 
 # 🧪 Testing
 
