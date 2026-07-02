@@ -134,29 +134,29 @@ The model allows lenders to:
                  FastAPI REST API
                         │
                         ▼
-              Request Validation
+                Request Validation
                  (Pydantic Models)
                         │
                         ▼
-              Data Preprocessing
+                 Data Preprocessing
                         │
                         ▼
-             Feature Engineering
+                Feature Engineering
                         │
                         ▼
-          Selected Features Loader
+              Selected Features Loader
                         │
                         ▼
-            Trained LightGBM Model
+              Trained LightGBM Model
                         │
                         ▼
-          Probability Prediction
+              Probability Prediction
                         │
                         ▼
-        Threshold Optimization
+              Threshold Optimization
                         │
                         ▼
-               JSON Response
+                 JSON Response
 ```
 
 ---
@@ -273,10 +273,10 @@ This makes the project suitable for showcasing Machine Learning Engineering skil
 # 📈 Project Workflow
 
 ```text
-Raw CSV Files
+  Raw CSV Files
         │
         ▼
-Data Cleaning
+ Data Cleaning
         │
         ▼
 Feature Engineering
@@ -285,7 +285,7 @@ Feature Engineering
 Feature Selection
         │
         ▼
-Model Training
+ Model Training
         │
         ▼
 Hyperparameter Optimization
@@ -294,19 +294,19 @@ Hyperparameter Optimization
 Threshold Optimization
         │
         ▼
-Model Saving
+  Model Saving
         │
         ▼
 Inference Pipeline
         │
         ▼
-FastAPI
+    FastAPI
         │
         ▼
-Docker
+     Docker
         │
         ▼
-REST API
+    REST API
 ```
 
 ---
@@ -384,7 +384,7 @@ data/raw/
 Clone the repository
 
 ```bash
-git clone https://github.com/<your-username>/Home-Credit-Default-Risk.git
+git clone https://github.com/morsycoo/Home-Credit-Default-Risk.git
 ```
 
 Move into the project
@@ -516,19 +516,19 @@ docker ps
 View logs
 
 ```bash
-docker logs <container_id>
+docker logs 7d5fe81e39a3
 ```
 
 Stop container
 
 ```bash
-docker stop <container_id>
+docker stop 7d5fe81e39a3
 ```
 
 Remove container
 
 ```bash
-docker rm <container_id>
+docker rm 7d5fe81e39a3
 ```
 
 ---
@@ -664,65 +664,54 @@ assets/
 └── docker_running.png
 ```
 
-Then display them:
-
-```md
-![Swagger](assets/swagger_home.png)
-
-![Prediction](assets/prediction_response.png)
-
-![Docker](assets/docker_running.png)
-
----
-
 # 🧠 Machine Learning Pipeline
 
 The project follows a complete end-to-end machine learning workflow inspired by production ML systems.
 
 ```text
-Business Understanding
-        │
-        ▼
-Data Collection
-        │
-        ▼
-Data Cleaning
-        │
-        ▼
-Exploratory Data Analysis (EDA)
-        │
-        ▼
-Feature Engineering
-        │
-        ▼
-Feature Selection
-        │
-        ▼
-Baseline Model
-        │
-        ▼
-Model Comparison
-        │
-        ▼
-Hyperparameter Optimization
-        │
-        ▼
-Threshold Optimization
-        │
-        ▼
-Model Explainability
-        │
-        ▼
-Model Serialization
-        │
-        ▼
-Inference Pipeline
-        │
-        ▼
-FastAPI Deployment
-        │
-        ▼
-Docker Container
+      Business Understanding
+              │
+              ▼
+       Data Collection
+              │
+              ▼
+        Data Cleaning
+              │
+              ▼
+  Exploratory Data Analysis (EDA)
+              │
+              ▼
+      Feature Engineering
+              │
+              ▼
+      Feature Selection
+              │
+              ▼
+        Baseline Model
+              │
+              ▼
+      Model Comparison
+              │
+              ▼
+  Hyperparameter Optimization
+              │
+              ▼
+    Threshold Optimization
+              │
+              ▼
+     Model Explainability
+              │
+              ▼
+      Model Serialization
+              │
+              ▼
+      Inference Pipeline
+              │
+              ▼
+      FastAPI Deployment
+              │
+              ▼
+       Docker Container
 ```
 
 ---
@@ -904,7 +893,7 @@ The production API uses the **Optuna-tuned LightGBM** model because it provides 
 The serialized model is stored as:
 
 ```text
-models/home_credit_optuna_lgbm.pkl
+models/home_credit_optuna_lgb.pkl
 ```
 
 ---
@@ -1010,7 +999,7 @@ Stored artifacts include:
 ```text
 models/
 
-├── home_credit_optuna_lgbm.pkl
+├── home_credit_optuna_lgb.pkl
 ├── selected_features.pkl
 ├── best_threshold.pkl
 └── final_model_results.csv
@@ -1023,16 +1012,16 @@ During inference, these artifacts are loaded automatically by the prediction pip
 # 🔄 Inference Pipeline
 
 ```text
-Incoming JSON
+   Incoming JSON
         │
         ▼
 Pydantic Validation
         │
         ▼
-Preprocessing
+  Preprocessing
         │
         ▼
-Feature Alignment
+ Feature Alignment
         │
         ▼
 Selected Features
@@ -1044,11 +1033,342 @@ LightGBM Prediction
 Threshold Optimization
         │
         ▼
-JSON Response
+  JSON Response
+
+---
+
+# 🧪 Testing
+
+The project includes automated tests to verify the correctness of the API and inference pipeline.
+
+## Running Tests
+
+```bash
+python -m pytest -v
 ```
+
+Example Output
+
+```text
+============================= test session starts =============================
+
+tests/test_api.py::test_health_check PASSED
+tests/test_api.py::test_prediction PASSED
+tests/test_api.py::test_invalid_request PASSED
+
+============================== 3 passed ==============================
+```
+
+---
+
+## Test Coverage
+
+Current automated tests include:
+
+- API Health Check
+- Prediction Endpoint
+- Request Validation
+- Response Validation
+- HTTP Status Codes
+
+Future tests will include:
+
+- Unit Tests
+- Integration Tests
+- Model Loading Tests
+- Inference Pipeline Tests
+- Docker Tests
+
+---
+
+# 📝 Logging
+
+The application includes a centralized logging system for monitoring API activity.
+
+Logs are automatically written to:
+
+```text
+logs/app.log
+```
+
+Example Log
+
+```text
+2026-07-02 20:09:03 | INFO | credit_risk | Prediction request received.
+
+2026-07-02 20:09:04 | INFO | credit_risk | Prediction completed successfully.
+Prediction=1
+Risk Score=0.6801
+Execution Time=18.12 ms
+```
+
+Logging currently records:
+
+- API Startup
+- Health Checks
+- Prediction Requests
+- Prediction Results
+- Exceptions
+- Execution Time
+
+---
+
+# 🐳 Docker Support
+
+The application is fully containerized.
+
+## Build Image
+
+```bash
+docker build -t credit-risk-api .
+```
+
+---
+
+## Run Container
+
+```bash
+docker run -p 8000:8000 credit-risk-api
+```
+
+---
+
+## Verify Container
+
+```bash
+docker ps
+```
+
+---
+
+## View Logs
+
+```bash
+docker logs 7d5fe81e39a3
+```
+
+---
+
+## Stop Container
+
+```bash
+docker stop 7d5fe81e39a3
+```
+
+---
+
+## Remove Container
+
+```bash
+docker rm 7d5fe81e39a3
+```
+
+---
+
+# ⚡ Performance
+
+Current production pipeline provides:
+
+- Fast inference
+- Lightweight deployment
+- Modular architecture
+- Automatic model loading
+- Automatic feature alignment
+- Configurable decision threshold
+- Production logging
+- REST API interface
+
+---
+
+# 🔐 Production Features
+
+The project already includes:
+
+- Modular Architecture
+- Configuration Management
+- Docker Containerization
+- Logging System
+- REST API
+- Pydantic Validation
+- Model Serialization
+- Automated Testing
+
+Designed for easy deployment to cloud platforms such as:
+
+- Render
+- Railway
+- Azure
+- AWS
+- Google Cloud
+
+---
+
+# 🛣 Roadmap
+
+Planned future improvements include:
+
+## Machine Learning
+
+- Advanced Feature Engineering
+- Ensemble Optimization
+- Probability Calibration
+- Drift Detection
+
+---
+
+## MLOps
+
+- MLflow
+- DVC
+- Airflow
+- Evidently AI
+- Feature Store
+
+---
+
+## DevOps
+
+- GitHub Actions
+- Docker Compose
+- Kubernetes
+- CI/CD Pipeline
+- Monitoring
+
+---
+
+## Backend
+
+- Authentication
+- Rate Limiting
+- Request Tracking
+- API Versioning
+- Background Tasks
+
+---
+
+# 💻 Technologies Used
+
+## Programming
+
+- Python
+
+---
+
+## Data Processing
+
+- NumPy
+- Pandas
+
+---
+
+## Machine Learning
+
+- Scikit-Learn
+- LightGBM
+- XGBoost
+- CatBoost
+- Optuna
+- SHAP
+
+---
+
+## Backend
+
+- FastAPI
+- Pydantic
+- Uvicorn
+
+---
+
+## Deployment
+
+- Docker
+- Joblib
+
+---
+
+## Testing
+
+- Pytest
+
+---
+
+## Development
+
+- Git
+- GitHub
+- VS Code
+
+---
+
+# 📈 Skills Demonstrated
+
+This project demonstrates practical experience in:
+
+- Machine Learning
+- Feature Engineering
+- Hyperparameter Optimization
+- Model Evaluation
+- Explainable AI
+- API Development
+- Backend Engineering
+- Docker
+- Software Engineering
+- Production Inference
+- Automated Testing
+- Project Architecture
+
+---
+
+# 📚 References
+
+- Home Credit Default Risk Competition
+- LightGBM Documentation
+- FastAPI Documentation
+- Optuna Documentation
+- SHAP Documentation
+- Scikit-Learn Documentation
+
+---
+
+# 📄 License
+
+This project is released under the MIT License.
+
+Feel free to use, modify, and share this project with proper attribution.
+
+---
+
+# 👨‍💻 Author
+
+**Mahmoud Morsy**
+
+AI & Machine Learning Engineer
+
+### Connect with me
+
+- GitHub: https://github.com/morsycoo
+- LinkedIn: https://www.linkedin.com/in/mahmudmursi/
+
+---
+
+# ⭐ If You Like This Project
+
+If you found this repository helpful:
+
+- ⭐ Star this repository
+- 🍴 Fork the project
+- 🛠 Open issues for suggestions
+- 🚀 Share it with others
+
+Your support helps improve future projects.
+
+---
 
 <div align="center">
 
-⭐ **If you found this repository useful, consider giving it a star!**
+## Thank You for Visiting
+
+**Built with ❤️ using Python, LightGBM, FastAPI, Docker, and Machine Learning.**
 
 </div>
