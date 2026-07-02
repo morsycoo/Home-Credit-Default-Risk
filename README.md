@@ -326,6 +326,355 @@ rather than only model training.
 
 ---
 
+# 📊 Dataset
+
+This project uses the **Home Credit Default Risk** dataset provided by Kaggle.
+
+The competition focuses on predicting whether a client will experience payment difficulties.
+
+## Dataset Source
+
+https://www.kaggle.com/competitions/home-credit-default-risk
+
+---
+
+## Main Files
+
+| File | Description |
+|------|-------------|
+| application_train.csv | Training dataset |
+| application_test.csv | Test dataset |
+| bureau.csv | Previous credits from other institutions |
+| bureau_balance.csv | Monthly bureau balances |
+| previous_application.csv | Previous loan applications |
+| POS_CASH_balance.csv | Point-of-sale loan history |
+| installments_payments.csv | Installment payment history |
+| credit_card_balance.csv | Credit card monthly balance |
+
+---
+
+## Dataset Size
+
+| Property | Value |
+|----------|------:|
+| Training Samples | 307,511 |
+| Test Samples | 48,744 |
+| Original Features | 122 |
+| Engineered Features | 700+ |
+
+---
+
+## Dataset Note
+
+The dataset is **not included** in this repository because:
+
+- Kaggle licensing restrictions
+- Large file size
+
+Download it manually and place the CSV files inside:
+
+```text
+data/raw/
+```
+
+---
+
+# ⚙ Installation
+
+Clone the repository
+
+```bash
+git clone https://github.com/<your-username>/Home-Credit-Default-Risk.git
+```
+
+Move into the project
+
+```bash
+cd Home-Credit-Default-Risk
+```
+
+Create a virtual environment
+
+Windows
+
+```bash
+python -m venv .venv
+```
+
+Activate
+
+```bash
+.venv\Scripts\activate
+```
+
+Linux / macOS
+
+```bash
+source .venv/bin/activate
+```
+
+Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+# 📦 Requirements
+
+Main libraries
+
+- Python 3.13
+- NumPy
+- Pandas
+- Scikit-Learn
+- LightGBM
+- XGBoost
+- CatBoost
+- Optuna
+- SHAP
+- FastAPI
+- Uvicorn
+- Joblib
+- Pytest
+
+---
+
+# ▶ Running the Notebook
+
+Open
+
+```text
+notebooks/home_credit_default_risk.ipynb
+```
+
+Execute all cells sequentially.
+
+This notebook performs:
+
+- Data Loading
+- Cleaning
+- EDA
+- Feature Engineering
+- Model Training
+- Hyperparameter Optimization
+- Model Evaluation
+- Threshold Optimization
+- Model Saving
+
+---
+
+# 🚀 Running the API
+
+Start the FastAPI server
+
+```bash
+python -m uvicorn api.app:app --reload
+```
+
+The API will be available at
+
+```text
+http://127.0.0.1:8000
+```
+
+Swagger UI
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+OpenAPI JSON
+
+```text
+http://127.0.0.1:8000/openapi.json
+```
+
+---
+
+# 🐳 Docker
+
+Build the Docker image
+
+```bash
+docker build -t credit-risk-api .
+```
+
+Run the container
+
+```bash
+docker run -p 8000:8000 credit-risk-api
+```
+
+Verify the running container
+
+```bash
+docker ps
+```
+
+View logs
+
+```bash
+docker logs <container_id>
+```
+
+Stop container
+
+```bash
+docker stop <container_id>
+```
+
+Remove container
+
+```bash
+docker rm <container_id>
+```
+
+---
+
+# 🌐 REST API
+
+## Base URL
+
+```text
+http://127.0.0.1:8000
+```
+
+---
+
+## Health Check
+
+Endpoint
+
+```http
+GET /
+```
+
+Example Response
+
+```json
+{
+    "message": "Credit Risk Intelligence API is running."
+}
+```
+
+---
+
+## Predict Credit Risk
+
+Endpoint
+
+```http
+POST /predict
+```
+
+Content-Type
+
+```text
+application/json
+```
+
+---
+
+# Example Request
+
+```json
+{
+    "features": {
+        "EXT_SOURCE_1": 0.083,
+        "EXT_SOURCE_2": 0.622,
+        "EXT_SOURCE_3": 0.746,
+        "PAYMENT_RATE": 0.045,
+        "CREDIT_TO_ANNUITY_RATIO": 22.0,
+        "BUREAU_DAYS_CREDIT_MAX": -500,
+        "POS_FUTURE_INSTALLMENTS_MEAN": 2.3,
+        "ANNUITY_INCOME_RATIO": 0.18,
+        "AMT_CREDIT": 500000,
+        "AMT_ANNUITY": 25000
+    }
+}
+```
+
+---
+
+# Example Response
+
+```json
+{
+    "prediction": 1,
+    "risk_score": 0.6801,
+    "threshold": 0.65
+}
+```
+
+---
+
+## Response Fields
+
+| Field | Description |
+|------|-------------|
+| prediction | Final prediction (0 or 1) |
+| risk_score | Probability of default |
+| threshold | Decision threshold |
+
+---
+
+## Status Codes
+
+| Code | Description |
+|-----:|-------------|
+| 200 | Successful prediction |
+| 400 | Invalid request |
+| 422 | Validation error |
+| 500 | Internal server error |
+
+---
+
+# 📖 Interactive Documentation
+
+FastAPI automatically generates interactive API documentation.
+
+Swagger UI
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+ReDoc
+
+```text
+http://127.0.0.1:8000/redoc
+```
+
+---
+
+# 📷 API Preview
+
+> Add screenshots inside an `assets/` directory.
+
+Example:
+
+```text
+assets/
+│
+├── swagger_home.png
+├── swagger_predict.png
+├── prediction_response.png
+└── docker_running.png
+```
+
+Then display them:
+
+```md
+![Swagger](assets/swagger_home.png)
+
+![Prediction](assets/prediction_response.png)
+
+![Docker](assets/docker_running.png)
+
+```
+
 <div align="center">
 
 ⭐ **If you found this repository useful, consider giving it a star!**
