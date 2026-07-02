@@ -1,34 +1,97 @@
-import pandas as pd
+"""
+Data preprocessing utilities for the Credit Risk Intelligence System.
+
+This module contains reusable preprocessing functions that are shared
+between training and inference.
+"""
+
+from __future__ import annotations
+
+import re
+
 import numpy as np
+import pandas as pd
 
 
-def reduce_memory_usage(df):
+def fix_days_employed(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Reduce dataframe memory usage.
+    Replace the anomalous DAYS_EMPLOYED value (365243) with NaN.
+
+    In the Home Credit dataset, the value 365243 is a placeholder
+    representing missing employment information.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        Input dataframe.
+
+    Returns
+    -------
+    pd.DataFrame
+        Cleaned dataframe.
     """
 
-    for col in df.columns:
+    df = df.copy()
 
-        col_type = df[col].dtype
+    if "DAYS_EMPLOYED" in df.columns:
+        df["DAYS_EMPLOYED"] = df["DAYS_EMPLOYED"].replace(
+            365243,
+            np.nan
+        )
 
-        if col_type != object:
+    return df
 
-            c_min = df[col].min()
-            c_max = df[col].max()
 
-            if str(col_type)[:3] == "int":
+def clean_columns(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Standardize feature names by removing unsupported characters.
 
-                if c_min > np.iinfo(np.int8).min and c_max < np.iinfo(np.int8).max:
-                    df[col] = df[col].astype(np.int8)
+    Example:
+        DAYS_BIRTH -> DAYS_BIRTH
+        NAME_CONTRACT_TYPE -> NAME_CONTRACT_TYPE
+        EXT_SOURCE_1 -> EXT_SOURCE_1
 
-                elif c_min > np.iinfo(np.int16).min and c_max < np.iinfo(np.int16).max:
-                    df[col] = df[col].astype(np.int16)
+    Parameters
+    ----------
+    df : pd.DataFrame
+        Input dataframe.
 
-                elif c_min > np.iinfo(np.int32).min and c_max < np.iinfo(np.int32).max:
-                    df[col] = df[col].astype(np.int32)
+    Returns
+    -------
+    pd.DataFrame
+        Dataframe with cleaned column names.
+    """
 
-            else:
+    df = df.copy()
 
-                df[col] = df[col].astype(np.float32)
+    df.columns = [
+        re.sub(
+            r"[^A-Za-z0-9_]+",
+            "_",
+            str(col)
+        )
+        for col in df.columns
+    ]
+
+    return df
+
+
+def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Execute the complete preprocessing pipeline.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        Raw input dataframe.
+
+    Returns
+    -------
+    pd.DataFrame
+        Preprocessed dataframe.
+    """
+
+    df = fix_days_employed(df)
+    df = clean_columns(df)
 
     return df

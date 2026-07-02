@@ -1,0 +1,8 @@
+2026-07-02 02:08:48 | INFO     | credit_risk | Health check requested.
+2026-07-02 02:09:03 | INFO     | credit_risk | Prediction request received.
+2026-07-02 02:09:04 | INFO     | credit_risk | Prediction completed successfully. Prediction=1, Risk Score=0.6801
+2026-07-02 02:23:46 | INFO     | credit_risk | Prediction request received.
+2026-07-02 02:23:47 | INFO     | credit_risk | Prediction completed successfully. Prediction=1, Risk Score=0.6801, Execution Time=1513.02 ms
+2026-07-02 03:48:37 | INFO     | credit_risk | Health check requested.
+2026-07-02 03:48:37 | INFO     | credit_risk | Prediction request received.
+2026-07-02 03:48:39 | INFO     | credit_risk | Prediction completed successfully. Prediction=0, Risk Score=0.5669, Execution Time=1926.06 ms
