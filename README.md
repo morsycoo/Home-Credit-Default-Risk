@@ -2,7 +2,7 @@
 
 # 🏠 Home Credit Default Risk Prediction
 
-### Credit Risk Intelligence System
+## Credit Risk Intelligence System
 
 **An End-to-End Machine Learning & MLOps-ready Credit Risk Prediction System built with LightGBM, FastAPI, Docker, and Pytest.**
 <p align="center">
