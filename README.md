@@ -1,3 +1,4 @@
+<p align="center">
 # 🏠 Home Credit Default Risk Prediction
 
 <div align="center">
@@ -5,6 +6,13 @@
 # Credit Risk Intelligence System
 
 **An End-to-End Machine Learning & MLOps-ready Credit Risk Prediction System built with LightGBM, FastAPI, Docker, and Pytest.**
+<p align="center">
+  <img
+    src="assets/Home Credit Default Risk Prediction.png"
+    alt="Home Credit Default Risk Prediction"
+    width="100%"
+  />
+</p>
 
 ![Python](https://img.shields.io/badge/Python-3.13-blue?logo=python)
 ![FastAPI](https://img.shields.io/badge/FastAPI-Production-green?logo=fastapi)
