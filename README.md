@@ -1,4 +1,4 @@
-<p align="center">
+<div align="center">
 
 # 🏠 Home Credit Default Risk Prediction
 
