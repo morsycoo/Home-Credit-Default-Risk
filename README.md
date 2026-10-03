@@ -1337,7 +1337,7 @@ AI & Machine Learning Engineer
 ### Connect with me
 
 - GitHub: https://github.com/morsycoo
-- LinkedIn: https://www.linkedin.com/in/mahmudmursi/
+- LinkedIn: https://www.linkedin.com/in/morsycoo
 
 ---
 
